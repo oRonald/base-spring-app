@@ -1,10 +1,13 @@
 package br.com.projeto.crud.base.resource;
 
+import br.com.projeto.crud.base.database.Clients;
 import br.com.projeto.crud.base.database.dto.ClientDetailsDTO;
 import br.com.projeto.crud.base.database.dto.CreateClientDTO;
+import br.com.projeto.crud.base.database.dto.UpdateClientProfileDTO;
 import br.com.projeto.crud.base.exception.ClientNewPassword;
 import br.com.projeto.crud.base.resource.iresources.IClientResource;
 import br.com.projeto.crud.base.service.iservices.IClientService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +36,12 @@ public class ClientsResource implements IClientResource {
     public ResponseEntity<Void> updatePassword(@RequestBody ClientNewPassword newPassword, @PathVariable("id") String clientId) {
         service.updatePassword(newPassword, clientId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @Override
+    @PutMapping("/update-profile/{id}")
+    public ResponseEntity<ClientDetailsDTO> updateClientProfile(@RequestBody UpdateClientProfileDTO updateProfile, @PathVariable("id") String clientId) {
+        Clients client = service.updateClient(updateProfile, clientId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(ClientDetailsDTO.create(client));
     }
 }

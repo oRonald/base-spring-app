@@ -2,6 +2,7 @@ package br.com.projeto.crud.base.service;
 
 import br.com.projeto.crud.base.database.Clients;
 import br.com.projeto.crud.base.database.dto.CreateClientDTO;
+import br.com.projeto.crud.base.database.dto.UpdateClientProfileDTO;
 import br.com.projeto.crud.base.database.repository.ClientsRepository;
 import br.com.projeto.crud.base.exception.ClientNewPassword;
 import br.com.projeto.crud.base.exception.InvalidPhoneException;
@@ -36,5 +37,43 @@ public class ClientService implements IClientService {
         client.setPassword(newPassword.getNewPassword());
 
         repository.save(client);
+    }
+
+    @Override
+    @Transactional
+    public Clients updateClient(UpdateClientProfileDTO dto, String clientId) {
+        dto.validatePhone();
+
+        Clients client = repository.findById(UUID.fromString(clientId)).orElseThrow(() -> new IllegalStateException("User not found"));
+
+        if(dto.getName() != null && !dto.getName().isBlank()){
+            client.setName(dto.getName());
+        }
+
+        if(dto.getEmail() != null && !dto.getEmail().isBlank()){
+            client.setEmail(dto.getEmail());
+        }
+
+        if(dto.getPhone() != null && !dto.getPhone().isBlank()){
+            client.setPhone(dto.getPhone());
+        }
+
+        return repository.save(client);
+    }
+
+    private Clients updateClientName(UpdateClientProfileDTO dto, Clients client){
+        if(dto.getName() != null && !dto.getName().isBlank()){
+            client.setName(dto.getName());
+        }
+
+        if(dto.getEmail() != null && !dto.getEmail().isBlank()){
+            client.setEmail(dto.getEmail());
+        }
+
+        if(dto.getPhone() != null && !dto.getPhone().isBlank()){
+            client.setPhone(dto.getPhone());
+        }
+
+        return client;
     }
 }
