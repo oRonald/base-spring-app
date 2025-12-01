@@ -1,8 +1,15 @@
 package br.com.projeto.crud.base.exception;
 
-public class ClientNewPassword extends RuntimeException{
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
-    public ClientNewPassword(String message) {
-        super(message);
-    }
+@Data
+public class ClientNewPassword {
+
+    @NotNull
+    @NotBlank
+    @Length(max = 15)
+    private String newPassword;
 }

@@ -3,11 +3,14 @@ package br.com.projeto.crud.base.service;
 import br.com.projeto.crud.base.database.Clients;
 import br.com.projeto.crud.base.database.dto.CreateClientDTO;
 import br.com.projeto.crud.base.database.repository.ClientsRepository;
+import br.com.projeto.crud.base.exception.ClientNewPassword;
 import br.com.projeto.crud.base.exception.InvalidPhoneException;
 import br.com.projeto.crud.base.service.iservices.IClientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,5 +28,13 @@ public class ClientService implements IClientService {
 
         Clients clients = new Clients(dto);
         return repository.save(clients);
+    }
+
+    @Override
+    public void updatePassword(ClientNewPassword newPassword, String clientId) {
+        Clients client = repository.findById(UUID.fromString(clientId)).orElseThrow(() -> new IllegalStateException("User not found"));
+        client.setPassword(newPassword.getNewPassword());
+
+        repository.save(client);
     }
 }
