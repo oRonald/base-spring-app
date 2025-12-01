@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: crud.api
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${POSTGRES_DB_NAME}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
