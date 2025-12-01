@@ -1,5 +1,6 @@
 package br.com.projeto.crud.base.database;
 
+import br.com.projeto.crud.base.database.dto.CreateClientDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,10 +31,10 @@ public class Clients implements Serializable {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    public Clients(String name, String email, String password, String phone) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
+    public Clients(CreateClientDTO dto) {
+        this.name = dto.getName();
+        this.email = dto.getEmail();
+        this.password = dto.getPassword();
+        this.phone = dto.getPhone();
     }
 }
