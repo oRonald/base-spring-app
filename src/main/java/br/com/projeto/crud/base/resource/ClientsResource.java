@@ -4,17 +4,14 @@ import br.com.projeto.crud.base.database.Clients;
 import br.com.projeto.crud.base.database.dto.ClientDetailsDTO;
 import br.com.projeto.crud.base.database.dto.CreateClientDTO;
 import br.com.projeto.crud.base.database.dto.UpdateClientProfileDTO;
-import br.com.projeto.crud.base.exception.ClientNewPassword;
+import br.com.projeto.crud.base.database.dto.ClientNewPasswordDTO;
 import br.com.projeto.crud.base.resource.iresources.IClientResource;
 import br.com.projeto.crud.base.service.iservices.IClientService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/clients")
@@ -33,7 +30,7 @@ public class ClientsResource implements IClientResource {
 
     @Override
     @PatchMapping("/update-password/{id}")
-    public ResponseEntity<Void> updatePassword(@RequestBody ClientNewPassword newPassword, @PathVariable("id") String clientId) {
+    public ResponseEntity<Void> updatePassword(@RequestBody ClientNewPasswordDTO newPassword, @PathVariable("id") String clientId) {
         service.updatePassword(newPassword, clientId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }

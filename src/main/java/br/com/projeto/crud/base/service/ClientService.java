@@ -4,7 +4,7 @@ import br.com.projeto.crud.base.database.Clients;
 import br.com.projeto.crud.base.database.dto.CreateClientDTO;
 import br.com.projeto.crud.base.database.dto.UpdateClientProfileDTO;
 import br.com.projeto.crud.base.database.repository.ClientsRepository;
-import br.com.projeto.crud.base.exception.ClientNewPassword;
+import br.com.projeto.crud.base.database.dto.ClientNewPasswordDTO;
 import br.com.projeto.crud.base.exception.InvalidPhoneException;
 import br.com.projeto.crud.base.service.iservices.IClientService;
 import jakarta.transaction.Transactional;
@@ -32,7 +32,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public void updatePassword(ClientNewPassword newPassword, String clientId) {
+    public void updatePassword(ClientNewPasswordDTO newPassword, String clientId) {
         Clients client = repository.findById(UUID.fromString(clientId)).orElseThrow(() -> new IllegalStateException("User not found"));
         client.setPassword(newPassword.getNewPassword());
 
