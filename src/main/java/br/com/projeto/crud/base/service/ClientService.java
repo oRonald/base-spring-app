@@ -18,12 +18,12 @@ import java.util.UUID;
 public class ClientService implements IClientService {
 
     private final ClientsRepository repository;
+    private final String PHONE_REGEX = "^(\\(?\\d{2}\\)?\\s?)?(9\\d{4}|\\d{4})-?\\d{4}$";
 
     @Override
     @Transactional
     public Clients createClient(CreateClientDTO dto) {
-        String phoneRegex = "^(\\(?\\d{2}\\)?\\s?)?(9\\d{4}|\\d{4})-?\\d{4}$";
-        if(!dto.getPhone().matches(phoneRegex)){
+        if(!dto.getPhone().matches(PHONE_REGEX)){
             throw new InvalidPhoneException("Invalid Phone Number");
         }
 
@@ -42,7 +42,7 @@ public class ClientService implements IClientService {
     @Override
     @Transactional
     public Clients updateClient(UpdateClientProfileDTO dto, String clientId) {
-        dto.validatePhone();
+        dto.validatePhone(PHONE_REGEX);
 
         Clients client = repository.findById(UUID.fromString(clientId)).orElseThrow(() -> new IllegalStateException("User not found"));
 

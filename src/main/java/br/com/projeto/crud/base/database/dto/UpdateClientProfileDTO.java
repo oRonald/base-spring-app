@@ -15,8 +15,8 @@ public class UpdateClientProfileDTO {
 
     private String phone;
 
-    public void validatePhone(){
-        if(this.phone != null && !this.phone.isBlank() && this.phone.length() < 11){
+    public void validatePhone(String phoneRegex){
+        if(this.phone == null || this.phone.isBlank() || !this.phone.matches(phoneRegex)){
             throw new IllegalArgumentException("Invalid Phone Number");
         }
     }
