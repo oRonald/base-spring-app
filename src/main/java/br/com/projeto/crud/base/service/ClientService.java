@@ -20,7 +20,7 @@ public class ClientService implements IClientService {
     public Clients createClient(CreateClientDTO dto) {
         String phoneRegex = "^(\\(?\\d{2}\\)?\\s?)?(9\\d{4}|\\d{4})-?\\d{4}$";
         if(!dto.getPhone().matches(phoneRegex)){
-            throw new InvalidPhoneException("Invalid phone");
+            throw new InvalidPhoneException("Invalid Phone Number");
         }
 
         Clients clients = new Clients(dto);
